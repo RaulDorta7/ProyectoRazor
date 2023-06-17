@@ -1,0 +1,63 @@
+﻿@page
+@model ProyectoRazorFinal.Pages.FiltradoModel
+@{
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Proyecto Razor</title>
+    <link href="~/css/StyleSheet.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <a href="/Index">Volver</a>
+    <header class="cabecera">
+        <!-- Cabecera -->
+        <h1>Filtrado</h1>
+    </header>
+
+
+    <div>
+        <form method="post" name="form3" action="">
+            <select name="campo" >
+                <option>Selecciona...</option>
+                <option>Clientes</option>
+                <option>Discos</option>
+                <option>Interpretes</option>        
+            </select>
+            @if (Request.Method == "POST")
+            {
+                if(Request.Form["campo"] == "Clientes")
+                {
+                  <select name="valoresClientes">
+                        <option>Selecciona...</option>
+                        <option>Nombre</option>
+                        <option>Email </option>
+
+                  </select>
+                }
+                if (Request.Form["campo"] == "Discos")
+                {
+                    <select name="valoresDiscos">
+                        <option>Título</option>
+                        <option>Años</option>
+                        <option>Interpretes</option>
+                    </select>
+                }
+            }
+
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
+    <div class="resultado">
+        <!-- Zona central -->
+
+        <p>Aquí se mostrará el resutado.</p>
+    </div>
+
+    <footer>
+        <!-- Pie de página -->
+        <p>Raúl Dorta Pérez - CIFP César Manrique - 2023</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,46 @@
+﻿@page
+@model ProyectoRazorFinal.IndexModel
+@{
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Proyecto Razor</title>
+    <link href="~/css/StyleSheet.css" type="text/css" rel="stylesheet"/> 
+</head>
+<body>
+    <header class="cabecera">
+        <!-- Cabecera -->
+        <h1>Proyecto Razor Raúl Dorta</h1>
+    </header>
+
+    <div class="menu">
+        <!-- Menú -->
+        <ul>
+            <li><a href="/Seleccion">Página de selección</a></li>
+            <li><a href="/Fecha">Página de fecha</a></li>
+            <li><a href="/Filtrado">Página de filtrado</a></li>
+            
+        </ul>
+    </div>
+
+    <div class="portada">
+        <!-- Zona central -->
+        <h2>Bienvenido!</h2>
+        <p><u>En el menú superior están las diferentes opciones a escoger:</u> </p></br>
+        <p><u>1.-Selección:</u> Elegidos varios valores de elementos marcables con Check o con Option, se mostrará la 
+            información del dato que cumpla con dichos criterios.</p></br>
+        <p><u>2.- Fecha:</u> Seleccionada una fecha determinada, se mostrarán los elementos de la tabla que cumplan 
+            dicha selección de fecha.</p></br>
+        <p><u>3.- Filtrado:</u> Dada una tabla, seleccionar un valor de uno de los campos mediante un elemento 
+            ComboBox que estará previamente relleno con todos los valores posibles.</p></br>
+        
+    </div>
+
+    <footer>
+        <!-- Pie de página -->
+        <p>Raúl Dorta Pérez - CIFP César Manrique - 2023</p>
+    </footer>
+</body>
+</html>

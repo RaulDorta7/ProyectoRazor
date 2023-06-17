@@ -1,0 +1,84 @@
+﻿@page
+@model ProyectoRazorFinal.Pages.FechaModel
+@{
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Proyecto Razor</title>
+    <link href="~/css/StyleSheet.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <a href="/Index">Volver</a>
+    <header class="cabecera">
+        <!-- Cabecera -->
+        <h1>Fecha</h1>
+    </header>
+
+
+    <div>
+        <form name="form2" method="post" action="">
+
+            <label for="fecha">Clientes regitrados antes de:</label>
+            <input type="date" name ="fecha" id="fecha"><br />
+            <input type="submit" id="mostrar" value="Mostrar">
+
+        </form>
+            
+    </div>
+    <div class="resultado">
+        <!-- Zona central -->
+
+        @{
+            if (Request.Method == "POST")
+            {
+                DateTime fecha = Convert.ToDateTime(Request.Form["fecha"]);
+                
+                List<string> clientes = (from Cliente in Model.Datos.Cliente where Cliente.FechaRegistro<fecha select Cliente.Nombre +",  Fecha de registro: " + Cliente.FechaRegistro).ToList();
+
+                List<List<string>> grupos = clientes
+                .Select((value, index) => new { Index = index, Value = value })
+                .GroupBy(x => x.Index / 3)
+                .Select(group => group.Select(x => x.Value).ToList())
+                .ToList();
+                int indiceGrupo = Request.Form.ContainsKey("groupIndex") ? int.Parse(Request.Form["groupIndex"]) : 0;
+
+
+                List<string> grupoActual = grupos[indiceGrupo];
+
+                foreach (var nombre in grupoActual)
+                {
+                    <p>@nombre</p>
+                }
+
+                // Flechas
+                
+                @if (indiceGrupo > 0)
+                {
+                    <form method="post">
+                        <input type="hidden" name="fecha" value="@fecha.ToString("yyyy-MM-dd")" />
+                        <input type="hidden" name="groupIndex" value="@(indiceGrupo - 1)" />
+                        <button type="submit"><img src="/imagenes/flechaAnterior.png"  alt="Anterior" width="40" height="40"/></button>
+                    </form>
+                }
+
+                @if (indiceGrupo < grupos.Count - 1)
+                {
+                    <form method="post">
+                        <input type="hidden" name="fecha" value="@fecha.ToString("yyyy-MM-dd")" />
+                        <input type="hidden" name="groupIndex" value="@(indiceGrupo + 1)" />
+                        <button type="submit"><img src="/imagenes/flechaSiguiente.png" alt="Siguiente" width="40" height="40" /></button>
+                    </form>
+                }
+                
+            }
+
+        }
+    </div>
+
+    <footer>
+        <!-- Pie de página -->
+        <p>Raúl Dorta Pérez - CIFP César Manrique - 2023</p>
+    </footer>
+</body>
+</html>

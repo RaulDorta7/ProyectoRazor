@@ -1,0 +1,140 @@
+﻿@page
+@using ProyectoRazorFinal.Models
+@model ProyectoRazorFinal.Pages.SeleccionModel
+@{
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Proyecto Razor</title>
+    <link href="~/css/StyleSheet.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+
+        <a href="/Index">Volver</a>
+
+
+    <header class="cabecera">
+        
+        <!-- Cabecera -->
+        <h1>Selección</h1>
+    </header>
+
+        
+    <div>
+        <form name="form1" method="post" action="">
+           
+                <label>
+            <input type="checkbox" name="valor1" value="checked" /> Nombres
+            </label>
+        
+            <br>
+            <label>
+            <input type="checkbox" name="valor2" value="checked"> Tipos
+            </label>
+            <br>
+            <label>
+            <input type="checkbox" name="valor3" value="checked"> Año
+            </label>
+            <br>
+            <br />
+            
+            <label>
+            <input type="radio" name="condicion" value="condicion1"> Discos
+            </label>
+            <br>
+            <label>
+            <input type="radio" name="condicion" value="condicion2"> Interpretes
+            </label><br>
+        
+            <input type="submit" value="Mostrar" />
+ 
+         </form>
+    </div>
+    <div class="resultado">
+        <!-- Zona central -->
+        
+        
+        
+        @{
+            if(Request.Method=="POST")
+            {
+                <h3><u>Resultados:</u></h3>
+                if(Request.Form["valor1"]=="checked")
+                {
+                    if (Request.Form["condicion"] == "condicion1")
+                    {
+                        List<string> discos = (from disco in Model.Datos.Disco select disco.Titulo).ToList();
+                        foreach (string nombre in discos)
+                        {
+                            <p>@nombre</p>
+                        }
+                    }
+                    if (Request.Form["condicion"] == "condicion2")
+                    {
+                        List<string> interpretes = (from Interprete in Model.Datos.Interprete select Interprete.Interprete1).ToList();
+                        foreach (string nombre in interpretes)
+                        {
+                            <p>@nombre</p>
+                        }
+                    }
+                    
+                }
+                if (Request.Form["valor2"] == "checked")
+                {
+                    if (Request.Form["condicion"] == "condicion1")
+                    {
+                        List<string> tipos = (from Tipo in Model.Datos.Tipo select Tipo.Tipo1).ToList();
+                        foreach (string tipo in tipos)
+                        {
+                            <p>@tipo</p>
+                        }
+                    }
+                    if (Request.Form["condicion"] == "condicion2")
+                    {
+                        List<string> tipos = (from i in Model.Datos.Interprete
+                                              join d in Model.Datos.Disco on i.IdInterprete equals d.IdInterprete
+                                              join dt in Model.Datos.DiscoTipo on d.IdDisco equals dt.IdDisco
+                                              join t in Model.Datos.Tipo on dt.IdTipo equals t.IdTipo
+                                              select i.Interprete1 + " - Tipo: " + t.Tipo1).ToList();
+                        foreach (string tipo in tipos)
+                        {
+                            <p>@tipo</p>
+                        }
+                    }
+
+                }
+                if (Request.Form["valor3"] == "checked")
+                {
+                    if (Request.Form["condicion"] == "condicion1")
+                    {
+                        List<double?> años = (from disco in Model.Datos.Disco select disco.Agno).ToList();
+                        foreach (double? año in años)
+                        {
+                            <p>@año</p>
+                        }
+                    }
+
+                    if (Request.Form["condicion"] == "condicion2")
+                    {
+                        List<double?> años = (from disco in Model.Datos.Disco select disco.Agno).ToList();
+                        foreach (double? año in años)
+                        {
+                            <p>@año</p>
+                        }
+                    }
+
+                }
+            }
+        }
+        
+        
+    </div>
+
+    <footer>
+        <!-- Pie de página -->
+        <p>Raúl Dorta Pérez - CIFP César Manrique - 2023</p>
+    </footer>
+</body>
+</html>
